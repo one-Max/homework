@@ -1,1 +1,2 @@
-./dashuju-hw2/data/*
+dashuju-hw2/data/*
+# 路径名前面不加./

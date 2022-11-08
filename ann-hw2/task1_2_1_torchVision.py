@@ -59,6 +59,7 @@ def cls_YorN(O, y):
 
 
 def main():
+    
     X = torch.tensor([[0.25, 0.5],
                     [0.0, 0.25],
                     [0.75, 0.0],
