@@ -35,7 +35,7 @@ class MyLoss(nn.Module):
         super().__init__()
     
     def forward(self, X_pred, X_gt, U, V, A, lam, lenth):
-        match_loss =   0.5 * torch.sum(torch.pow((torch.mul(A, (X_gt-X_pred))), 2)) 
+        match_loss = (1/lenth) * 0.5 * torch.sum(torch.pow((torch.mul(A, (X_gt-X_pred))), 2)) 
         norm_loss =  lam *(torch.sum(torch.pow(U, 2)) + torch.sum(torch.pow(V, 2)))
         return match_loss + norm_loss
 
@@ -51,8 +51,8 @@ def main():
     # 参数初始化设置
     user_dim = 10000; film_dim = 10000
     k = 50
-    lr = 0.0001
-    num_epochs = 2000
+    lr = 0.01
+    num_epochs = 200
     lam = 0.01
  
     # ==================================================
