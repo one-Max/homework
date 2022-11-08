@@ -18,7 +18,6 @@ norm_matrix = norm @ norm.T
 X1 = X_train @ X_train.T
 cos_matrix = X1 / norm_matrix
 weight = cos_matrix / np.sum(cos_matrix, axis=1).reshape(-1, 1)
-
 X_pred = weight @ X_train
 
 t1 = time.perf_counter()
@@ -27,6 +26,7 @@ t1 = time.perf_counter()
 # 计算RMSE:只对那些X_test中非0的(非空)数据计算损失
 
 loss_matrix = X_pred - X_test
+
 RMSE = 0
 rows, cols = np.nonzero(X_test)
 for row, col in zip(list(rows), list(cols)):
@@ -38,6 +38,7 @@ t2 = time.perf_counter()
 print(f'RMSE: {RMSE:.8f}')
 print(f'run time pred: {t1 - t0:.8f}s')
 print(f'run time loss: {t2 - t1:.8f}s')
+print(f'total run time: {t2 - t0:.8f}s')
 
 
 

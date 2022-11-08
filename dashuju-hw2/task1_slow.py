@@ -17,13 +17,10 @@ X1 = X_train @ X_train.T
 cos_matrix = X1 / norm_matrix
 weight = cos_matrix / np.sum(cos_matrix, axis=1).reshape(-1, 1)
 
-# X_pred = np.dot(weight, X_train)
-X_pred = np.zeros((10000, 10000))
 # ==================================================
-# 计算RMSE:只对那些X_test中非0的(非空)数据计算损失
-t1 = time.perf_counter()
+# 计算预测值，同时计算RMSE:只对那些X_test中非0的(非空)数据计算损失
 
-
+X_pred = np.zeros((10000, 10000))
 RMSE = 0
 rows, cols = np.nonzero(X_test)
 for row, col in zip(list(rows), list(cols)):
@@ -31,12 +28,7 @@ for row, col in zip(list(rows), list(cols)):
     RMSE += (X_pred[row][col] - X_test[row][col]) ** 2
 RMSE = np.sqrt(RMSE / len(rows))
 
-t2 = time.perf_counter()
+t1 = time.perf_counter()
 
 print(f'RMSE: {RMSE:.8f}')
-print(f'run time pred: {t1 - t0:.8f}s')
-print(f'run time loss: {t2 - t1:.8f}s')
-
-
-# plt.spy(X_test)
-# plt.savefig('/data1/zjw/homework/0.png')
+print(f'run time: {t1 - t0:.8f}s')

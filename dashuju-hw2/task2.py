@@ -30,7 +30,6 @@ class UV(nn.Module):
         print('Total number of parameters: %d' % num_params)
 
 
-
 def main():
     # ==================================================
     # 载入矩阵数据

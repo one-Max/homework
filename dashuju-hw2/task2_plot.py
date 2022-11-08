@@ -55,10 +55,10 @@ def main():
     # ==================================================
     # 参数初始化设置
     user_dim = 10000; film_dim = 10000
-    lr = 0.01       
-    num_epochs = 200
-    k = 50          # U，V矩阵降到m(n)xk维
-    lam = 0.01      # 正则项系数lambda
+    lr = 0.05       
+    num_epochs = 2000
+    k = 20          # U，V矩阵降到m(n)xk维
+    lam = 0.0001      # 正则项系数lambda
 
     # ==================================================
     # 获得A矩阵和计算RMSE时的归一化系数lenth
@@ -69,36 +69,46 @@ def main():
     A = torch.tensor(A, dtype=torch.float32).cuda()
 
     # ==================================================
-    # 初始化UV参数
+    # 初始化UV参数，损失函数，优化器
     uv = UV(user_dim, film_dim, k).cuda()
     uv.print_network()
     parameters = uv.parameters()
     loss_fn = MyLoss()
     optimizer = optim.SGD(parameters, lr=lr, momentum=0.9)
 
+    X_test = torch.tensor(X_test, dtype=torch.float32).cuda()
+
     # ==================================================
     # 梯度下降得到U, V
-    loss_history = []
+    train_loss = []
+    test_loss = []
     for epoch in range(num_epochs):
         optimizer.zero_grad()
         X_pred = uv.forward()
         loss = loss_fn(X_pred, X_train, uv.U, uv.V, A, lam, length)
         loss.backward()
         optimizer.step()
-        loss_history.append(loss.item())
+        train_loss.append(loss.item())
+        
+        test_e = torch.pow((X_test - torch.mul(A, X_pred)), 2)
+        test_l = torch.pow((torch.sum(test_e) / length), 0.5)
+        test_loss.append(test_l.item())
+
         if (epoch+1) % 5 == 0:
-            print('Epoch [{}/{}], Loss: {:.4f}'.format(epoch +
-              1, num_epochs, loss.item()))
+            print('Epoch [{}/{}], train Loss: {:.4f}, test loss: {:.4f}'.format(epoch +
+              1, num_epochs, loss.item(), test_l.item()))
 
     # ==================================================
-    # 在测试集上得到RMSE
-    predicted = uv.forward().cpu().detach().numpy()
-    RMSE = 0
-    for row, col in zip(list(rows), list(cols)):
-        RMSE += (predicted[row][col] - X_test[row][col]) ** 2
-    RMSE = (RMSE / len(rows)) ** 0.5
-    print(RMSE)
-
+    # 目标函数值、测试误差可视化 
+    plt.figure(figsize=(10, 6))
+    plt.plot(range(1,num_epochs+1), train_loss, label='train loss')
+    plt.plot(range(1, num_epochs+1), test_loss, label='test loss')
+    plt.xlabel('epoch', fontsize=15)
+    plt.ylabel('Loss', fontsize=15)
+    plt.grid(linestyle='--')
+    plt.tight_layout()
+    plt.savefig('/data1/zjw/homework/dashuju-hw2/loss.png')
+    plt.show()
 
 if __name__ == '__main__':
     main()
