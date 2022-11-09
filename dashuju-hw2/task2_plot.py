@@ -40,7 +40,7 @@ class MyLoss(nn.Module):
         super().__init__()
     
     def forward(self, X_pred, X_gt, U, V, A, lam, length):
-        match_loss = (1/length) * 0.5 * torch.sum(torch.pow((torch.mul(A, (X_gt-X_pred))), 2)) 
+        match_loss =  (1/length) * 0.5 * torch.sum(torch.pow((torch.mul(A, (X_gt-X_pred))), 2)) 
         norm_loss =  lam *(torch.sum(torch.pow(U, 2)) + torch.sum(torch.pow(V, 2)))
         return match_loss + norm_loss
 
@@ -55,8 +55,8 @@ def main():
     # ==================================================
     # 参数初始化设置
     user_dim = 10000; film_dim = 10000
-    lr = 0.05       
-    num_epochs = 2000
+    lr = 0.1
+    num_epochs = 500
     k = 20          # U，V矩阵降到m(n)xk维
     lam = 0.0001      # 正则项系数lambda
 
@@ -102,13 +102,20 @@ def main():
     # 目标函数值、测试误差可视化 
     plt.figure(figsize=(10, 6))
     plt.plot(range(1,num_epochs+1), train_loss, label='train loss')
-    plt.plot(range(1, num_epochs+1), test_loss, label='test loss')
     plt.xlabel('epoch', fontsize=15)
     plt.ylabel('Loss', fontsize=15)
     plt.grid(linestyle='--')
     plt.tight_layout()
-    plt.savefig('/data1/zjw/homework/dashuju-hw2/loss.png')
-    plt.show()
+    plt.savefig('/data1/zjw/homework/dashuju-hw2/train-loss.png')
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(range(1, num_epochs+1), test_loss, label='test loss')
+    plt.xlabel('epoch', fontsize=15)
+    plt.ylabel('RMSE', fontsize=15)
+    plt.grid(linestyle='--')
+    plt.tight_layout()
+    plt.savefig('/data1/zjw/homework/dashuju-hw2/test-loss.png')
+
 
 if __name__ == '__main__':
     main()
