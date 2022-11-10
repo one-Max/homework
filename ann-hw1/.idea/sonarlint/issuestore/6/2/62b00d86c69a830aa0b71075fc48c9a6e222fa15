@@ -1,12 +1,0 @@
-
-vpython:S117+"_Rename this local variable "label_oneNoise" to match the regular expression ^[_a-z][a-z0-9_]*$.(â‡‰È
-{python:S117:"_Rename this local variable "label_twoNoise" to match the regular expression ^[_a-z][a-z0-9_]*$.(Âœ’ƒøÿÿÿÿ
-ppython:S117*"YRename this local variable "oneNoise" to match the regular expression ^[_a-z][a-z0-9_]*$.(ö˜º
-xpython:S1179"aRename this local variable "testSet_twoNoise" to match the regular expression ^[_a-z][a-z0-9_]*$.(¸ƒ×½
-wpython:S117Q"YRename this local variable "trainSet" to match the regular expression ^[_a-z][a-z0-9_]*$.(şÇŠî8©Á…º0
-ypython:S117'"bRename this local variable "trainSet_prepared" to match the regular expression ^[_a-z][a-z0-9_]*$.(·—€•
-kpython:S3776"TRefactor this function to reduce its Cognitive Complexity from 58 to the 15 allowed.(œŸ²_
-6python:S125+"Remove this commented out code.(â‡‰È
-;python:S125:"Remove this commented out code.(Âœ’ƒøÿÿÿÿ
-;python:S125C"Remove this commented out code.(ç€³şÿÿÿÿ
-Bpython:S125S"Remove this commented out code.(µÇ¸øÿÿÿÿ8äíå…º0
