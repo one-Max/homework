@@ -85,6 +85,7 @@ def main():
 
     print('w1=%s' % W12[0])
     print('w2=%s' % W12[1])
+    plt.savefig('homework/ann-hw3/picture/1-1.png')
     plt.show()
 
 

@@ -103,10 +103,10 @@ def main():
         lr = learning_rate * (1 - epoch/(num_epochs-1))
 
         W = compete(X_train, W, lr)
-        # Wplot(W, 'Step:%d, eta:%4.2f' % (epoch+1, lr))
+        # Wplot(W, 'Step:%d, lr:%4.2f' % (epoch+1, lr))
 
-    Wplot(W, 'Step:%d, eta:%4.2f' % (epoch+1, lr))
-    plt.savefig('/data1/zjw/homework/ann-hw3/picture/jieguo.png')
+    Wplot(W, 'Step:%d, lr:%4.2f' % (epoch+1, lr))
+    plt.savefig('homework/ann-hw3/picture/jieguo.png')
     plt.show()
 
     # win_id = cal_precision(X_test, W)
