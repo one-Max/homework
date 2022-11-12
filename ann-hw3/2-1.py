@@ -34,6 +34,8 @@ def data_loader(num_pattern, root_path):
 def WTA(x, W):
     innerdot = W @ x
     return np.where(innerdot == np.max(innerdot))[0][0]
+    # innerdot = np.array([(x-ww).dot(x-ww) for ww in W])
+    # return np.where(innerdot == np.min(innerdot))[0][0]
 
 # ======================================================
 # 竞争策略：无拓扑结构
@@ -149,7 +151,7 @@ def main():
     X_label = []        # 48
 
     for index, pattern in enumerate(label_data):
-        for letter in target_2:
+        for letter in target:
             id_ = np.where(CharStr == letter)[0][0]
             X_train.append(ascii_data[index][id_])
             X_label.append(pattern[id_])
@@ -174,7 +176,7 @@ def main():
     for epoch in range(num_epochs):
         lr = learning_rate*(1-epoch/(num_epochs-1)) + 0.01*epoch/(num_epochs-1)
 
-        W = compete2(X_train, W, lr)
+        W = compete1(X_train, W, lr)
         # Wplot(W, 'Step:%d, lr:%4.2f' % (epoch+1, lr))
 
     Wplot(W, 'Step:%d, lr:%4.2f' % (epoch+1, lr))

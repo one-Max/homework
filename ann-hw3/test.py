@@ -5,38 +5,46 @@ import numpy as np
 import matplotlib.pyplot as plt
 from numpy import sin, cos, pi
 
-sample_angle = [-5, 5, 10, 75, 115, 210, 240, 300]
-sample_xy = np.array([[cos(a*pi/180), sin(a*pi/180)]
-                     for a in sample_angle]).astype('float32')
-
-W12_angle = [-45, 270, 30]
-W12 = np.array([[cos(b*pi/180), sin(b*pi/180)]
-               for b in W12_angle]).astype('float32')
-
-sxy = sample_xy
-# print(sxy)
-# np.random.shuffle(sxy)
-# print(sxy)
-
-# print(W12)
-# print(sxy[0].T)
-# a = W12 @ (sxy[0].reshape(-1,1))
-# b = W12 @ sxy[0]
-# print(a[0])
-# print(a[0][0])
-# print(b[0])
-
 ss = np.array([[1,2,5,0,2]])
 ee = np.array([[2,3,7,8,2]])
 # print(ss @ ee)
 # print(np.random.rand(3, 1))
 a = np.concatenate((ss,ee), axis=0)
-print(a)
+# print(a)
 # a = np.array([1,0,3]).reshape(-1,1)
-print([np.where(mark == np.max(mark))[0][0] for mark in a.T])
+# print([np.where(mark == np.max(mark))[0][0] for mark in a.T])
 cc = np.zeros(10)
 
+X = np.random.random(1000)
+Y = np.random.random(1000)
 
-plt.figure
-plt.savefig('homework/ann-hw3/picture/jieguo2.png', dpi=1000)
-plt.show()
+point_group = []
+
+for x, y in zip(X, Y):
+    if y <= (3**0.5)*x and y <= 3**0.5-(3**0.5)*x and y >= 0:
+        point_group.append([x, y])
+id_list = np.random.randint(0, len(point_group)-1, 100)
+point_group = np.array(point_group)
+sample_data = point_group[id_list]
+
+# plt.figure()
+# plt.scatter(sample_data[:,0], sample_data[:,1])
+# plt.margins(0.2)
+# plt.show()
+
+
+for i in range(2, 3):
+    print(i)
+print(np.random.random((100,100)))
+
+q = np.ones((8,2))
+q[1] = np.array([1,1])
+q[2] = np.array([5,7])
+q[5] = np.array([2,9])
+qq = q.reshape(2, 4, 2)
+print(qq)
+print('===================')
+print(qq.transpose(2,1,0))
+# print(np.stack((np.random.random((5,5)),
+#       np.random.random((5, 5)))).T)
+
