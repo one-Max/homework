@@ -105,12 +105,12 @@ def main():
         W = compete1(X_train, W, lr, r)
 
         
-        plt.clf()
-        show_data(X_train, 0)
-        show_data(W, 1, "Step:%d/%d, r:%d, lr:%4.2f" %
-              (epoch+1, num_epochs, r, lr))
-        plt.draw() 
-        plt.pause(0.001)
+        # plt.clf()
+        # show_data(X_train, 0)
+        # show_data(W, 1, "Step:%d/%d, r:%d, lr:%4.2f" %
+        #       (epoch+1, num_epochs, r, lr))
+        # plt.draw() 
+        # plt.pause(0.001)
     
     show_data(X_train, 0)
     show_data(W, 1, "Step:%d/%d, r:%d, lr:%4.2f" %

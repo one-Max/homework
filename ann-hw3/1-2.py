@@ -87,8 +87,8 @@ def main():
 
     # ----------------------------------------------------------
     # W的不同初始化方式
-    # W = np.random.rand(d, len(C))               # 随机初始化
-    W = X_origin + np.mean(X_noise, axis=0)     # 原始字符初始化
+    W = np.random.rand(d, len(C))               # 随机初始化
+    # W = X_origin + np.mean(X_noise, axis=0)     # 原始字符初始化
     # Wplot(W, 'Step:%d, eta:%4.2f' % (0, 0.1))
 
     # ----------------------------------------------------------

@@ -48,3 +48,9 @@ print(qq.transpose(2,1,0))
 # print(np.stack((np.random.random((5,5)),
 #       np.random.random((5, 5)))).T)
 
+print(np.random.uniform(-4, 4, 5)[:,None])
+print(np.linspace(0.1, 0, 10))
+print(np.argmin([1, 5, 45,-5,5]))
+print(np.zeros(np.array([2, 3,323,23]).shape[0]))
+print(np.squeeze(q[:,0]))
+print(np.random.randint(0,360,3))
