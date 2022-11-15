@@ -22,7 +22,7 @@ pip install opencv-python
 ```bash
 git clone https://github.com/opendilab/DI-adventure
 ```
-如果出现网络问题，也可以直接去到 DI-advanture 的仓库手动下载后解压。这样做的缺陷是需要手动初始化 git 。推荐使用 git 作为代码管理工具，记录每一次的修改，推荐 [git 教程](https://www.liaoxuefeng.com/wiki/896043488029600)。
+如果出现网络问题，也可以直接去到 DI-advanture 的仓库手动下载后解压。这样做的缺陷是需要手动初始化 git 。推荐使用 git 作为代码管理工具，记录每一次的修改，推荐 [cgit 教程](https://www.liaoxuefeng.com/wiki/896043488029600)。
 ### 强化学习库 DI-engine 安装
 - 由于这次大作业的目标不是强化学习算法，因此代码中使用了开源强化学习库 DI-engine 作为具体的强化学习算法实现，安装方法如下：
 ```bash
