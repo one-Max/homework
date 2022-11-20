@@ -94,6 +94,7 @@ python3 -u evaluate.py -s <SEED> -ckpt <CHECKPOINT_PATH> -rp <REPLAY_PATH>
 ```
 - 建议先一个种子（seed）验证智能体能否正确运行，然后增加到3个种子验证智能体性能的稳定性。
 - 此外该命令还会保存评估时的游戏录像（请确保您的 ffmpeg 软件可用），以供查看。
+- ffmpeg版本不对，卸载了重新装一个就好了，重装完是1.4版本。这个包是装pytorch时一并装的，卸载的时候会卸载掉一些依赖的包，numpy，six还有一个忘记了，重新用pip装就可以，不影响模型的evaluate和train
 
 ## 4. 特征处理
 - 包括对于观测空间（observation space）、动作空间（action space）和奖励空间（reward space）的处理；
