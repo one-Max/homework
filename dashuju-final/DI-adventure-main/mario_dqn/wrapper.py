@@ -44,6 +44,7 @@ class SparseRewardWrapper(gym.Wrapper):
         super().__init__(env)
 
     def step(self, action):
+        # sourcery skip: boolean-if-exp-identity, remove-unnecessary-cast
         obs, reward, done, info = self.env.step(action)
         dead = True if reward == -15 else False
         reward = 0
