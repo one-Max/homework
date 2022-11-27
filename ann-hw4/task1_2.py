@@ -36,6 +36,7 @@ def visualize(W, path=None):
     plt.tight_layout()
     # plt.draw()
     # plt.pause(0.002)
+    # plt.show()
 
     if path is not None:
         plt.savefig(path)
@@ -60,8 +61,6 @@ def bam(W, x, y_last):
 # ------------------------------------------------------------
 # 计算当前的能量函数值
 def cal_energy(W, x, y):
-    print(x)
-    print(y)
     return -((x @ W) @ y)
 
 
@@ -71,7 +70,7 @@ def addnoise(c, noise_ratio = 0.1):
     noisenum = int(len(c) * noise_ratio)
     noisepos = [1]*len(c)
     noisepos[:noisenum] = [-1]*noisenum
-    random.shuffle(noisepos)
+    np.random.shuffle(noisepos)
 
     cc = np.array([x*y for x,y in zip(c, noisepos)])
     return cc
@@ -117,31 +116,38 @@ def main():
     # 计算能量函数
     energy = np.zeros(8)
     for i in range(8):
-        cal_energy(W, X[i], Y[i])
+        energy[i] = cal_energy(W, X[i], Y[i])
     print(f'Energy: {energy}')
 
 
     # 从噪声数据中还原到对应的标签
     timeNum = 10
+    plt.draw()
+    plt.pause(0.2)
 
     for noi in range(50):                   # 50种加噪声的结果
-        X_copy = copy.deepcopy(X)
 
+        # 生成加噪声数据X_noise
+        X_noise = np.zeros(X.shape)
         for i,x in enumerate(X):
-            X_copy[i] = addnoise(x, 0.1)    # 加噪声后的结果
+            X_noise[i] = addnoise(x, 0.1)
         
-        # visualize(X_copy)
-        # plt.show()
-        
-        for j,x in enumerate(X_copy):       # 由于更新的是状态，权值不变，那么<对所有样本迭代一遍再重复time次>和<逐个对单个样本迭代time次> 一样
+        # 保留原始数据，在X_copy上更新状态
+        X_copy = X_noise.copy()
+        visualize(X_copy, 'ann-hw4/picture/noisedata.png')
+
+        # 还原到对应的标签
+        for j,x in enumerate(X_noise):      # 由于更新的是状态，权值不变，那么<对所有样本迭代一遍再重复time次>和<逐个对单个样本迭代time次> 一样
             y = np.sign(x @ W)
             for _ in range(timeNum):        # 迭代次数
                 ee = cal_energy(W, x, y)
                 x, y = bam(W, x, y)
-            print(y, Y[j])
+
+            X_copy[j] = x
+            print(y, Y[j], (y==Y[j]).all())
         
-        # visualize(X_copy)
-        # plt.show()
+        visualize(X_copy, 'ann-hw4/picture/updatedata.png')
+        
         break
 
 
