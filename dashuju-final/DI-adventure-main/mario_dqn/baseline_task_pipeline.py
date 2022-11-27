@@ -21,6 +21,9 @@ from model import DQN
 from wrapper import MaxAndSkipWrapper, WarpFrameWrapper, ScaledFloatFrameWrapper, FinalEvalRewardEnv, \
     FrameStackWrapper
 from middleware import online_logger
+from wrapper import SparseRewardWrapper, StickyActionWrapper
+
+
 
 # config 配置文件，这一部分主要包含一些超参数的配置，大家只用关注 model 中的参数即可
 mario_dqn_config = dict(
@@ -57,9 +60,9 @@ mario_dqn_config = dict(
             # 每次利用相同的经验更新的次数
             update_per_collect=10,
             # batch_size 大小
-            batch_size=32,
+            batch_size=1024,
             # 学习率
-            learning_rate=0.0001,
+            learning_rate=0.0002,
         ),
     ),
 )
@@ -84,6 +87,8 @@ def wrapped_mario_env():
                 lambda env: ScaledFloatFrameWrapper(env),
                 lambda env: FrameStackWrapper(env, n_frames=1),
                 lambda env: FinalEvalRewardEnv(env),
+                lambda env: SparseRewardWrapper(env),
+                lambda env: StickyActionWrapper(env, 0.1)
             ]
         }
     )
