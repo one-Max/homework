@@ -75,8 +75,8 @@ def main():
     # 字母列表初始化，选择 ZHUOQING 8个字母
     CharStr = np.array(['A','B','C','D','E','F','G','H','I','J','K','L','M',
                         'N','O','P','Q','R','S','T','U','V','W','X','Y','Z'])
-    # target = np.array(['G', 'N', 'I', 'Q', 'O', 'U', 'H', 'Z'])
-    target = np.array(['A', 'M', 'I'])      # 字母本身特征数少，一旦结构相似，网络就分不出来了
+    target = np.array(['G', 'N', 'I', 'Q', 'O', 'U', 'H', 'Z'])
+    # target = np.array(['A', 'M', 'I'])      # 字母本身特征数少，一旦结构相似，网络就分不出来了
 
     # 生成训练数据和标签
     X_train = []        # 8x35
@@ -107,10 +107,10 @@ def main():
     plt.draw()
     plt.pause(0.2)
 
-    for noi in range(50):                 # 50种加噪声结果
+    for noi in range(1):                 # 4种加噪声结果
         C = copy.deepcopy(X_train)
         for i,x in enumerate(X_train):
-            C[i] = addnoise(x, 0.2)
+            C[i] = addnoise(x, 0)
         
         # visualize(c)
         for _ in range(timeNum):      # 迭代次数

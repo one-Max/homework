@@ -34,8 +34,6 @@ def visualize(W, path=None):
         plt.grid(linestyle='--')
 
     plt.tight_layout()
-    plt.draw()
-    plt.pause(0.002)
     # plt.show()
 
     if path is not None:
@@ -108,7 +106,7 @@ def main():
     # 数据预处理: 0/1 -> 1/-1
     X = np.array(X).astype('float32') * 2 -1
     Y = np.array(Y).astype('float32')
-    
+
     # 链接权系数矩阵W
     W = X.T @ Y
     # plt.imshow(W.T)
@@ -122,35 +120,29 @@ def main():
 
 
     # 从噪声数据中还原到对应的标签
-    timeNum = 2
-    # plt.draw()
-    # plt.pause(0.2)
+    timeNum = 100
+    X_pred = []
 
-    for noi in range(4):                   # 4种加噪声的结果
+    # 保留原始数据，在Y_copy上更新状
+    Y_copy = Y.copy()
 
-        # 生成加噪声数据X_noise
-        X_noise = np.zeros(X.shape)
-        for i,x in enumerate(X):
-            X_noise[i] = addnoise(x, 0.2)
-        
-        # 保留原始数据，在X_copy上更新状
-        X_copy = X_noise.copy()
-        # visualize(X_copy, f'ann-hw4/picture/u{noi}.png')
+    # 还原到对应的标签
+    for j,y in enumerate(Y):            # 由于更新的是状态，权值不变，那么<对所有样本迭代一遍再重复time次>和<逐个对单个样本迭代time次> 一样
+        x = np.sign(y @ W.T)
+        for _ in range(timeNum):        # 迭代次数
+            ee = cal_energy(W.T, y, x)
+            y, x = bam(W.T, y, x)
 
-        # 还原到对应的标签
-        for j,x in enumerate(X_noise):      # 由于更新的是状态，权值不变，那么<对所有样本迭代一遍再重复time次>和<逐个对单个样本迭代time次> 一样
-            y = np.sign(x @ W)
-            for _ in range(timeNum):        # 迭代次数
-                ee = cal_energy(W, x, y)
-                x, y = bam(W, x, y)
+        Y_copy[j] = y
 
-            X_copy[j] = x
-            print(y, Y[j], (y==Y[j]).all())
-        
+        print(x)
+        print(X[j])
+        print(f'Matching result of {target[j]}: {(x==X[j]).all()}')
         print('----------------------------------------')
-        # visualize(X_copy, f'ann-hw4/picture/v{noi}.png')
-        
+        X_pred.append(x)
 
+    visualize(np.array(X_pred), 'ann-hw4/picture/888.png')
+    plt.show()
 
 if __name__ == '__main__':
     main()

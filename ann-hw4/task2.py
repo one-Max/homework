@@ -56,6 +56,7 @@ def xornnout(x, wb):
 # ------------------------------------------------------------
 def xorerr(y, y_pred):
     return sum([abs((x-y)**2) for x,y in zip(y, y_pred)])
+    # return sum([abs((x-y)) for x,y in zip(y, y_pred)])
 
 
 # ------------------------------------------------------------
@@ -67,7 +68,7 @@ def funcC(error):
 
 # ------------------------------------------------------------
 def a01C(x, y, a01):
-    wb = transform(a01)         # 将二值编码的权值换源为十进制数 1x9
+    wb = transform(a01)     # 将二值编码的权值换源为十进制数 1x9
     y_pred= xornnout(x, wb) # 前向输出预测结果 1x4
     e = xorerr(y, y_pred)   # 计算MSE误差
     return funcC(e)         # 给出适应度
@@ -149,8 +150,8 @@ def main():
 
     # Parameters setting
     GA_SELECT_RATIO             = 0.2   # 选择比率
-    GA_MUTATE_RATIO             = 0.8   # 变异比率
-    GA_CROSS_RATIO              = 0.25  # 交叉比率
+    GA_MUTATE_RATIO             = 0.5   # 变异比率
+    GA_CROSS_RATIO              = 0.8   # 交叉比率
     GA_NUMBER                   = 100   # 种群个数
     GA_STEP                     = 100   # 演化步骤
 
@@ -160,7 +161,7 @@ def main():
 
     cdim = []       # 种群平均适应度
     for i in range(GA_STEP):
-        aall = GA_iterate(X, y, aall)
+        aall = GA_iterate(X, y, aall, GA_SELECT_RATIO, GA_MUTATE_RATIO, GA_CROSS_RATIO)
         wb = transform(aall[0])
         y_pred = xornnout(X, wb)
         e = xorerr(y, y_pred)
@@ -169,6 +170,7 @@ def main():
 
         edim = [a01C(X, y, na) for na in aall]
         ea = np.average(edim)
+        # ea = np.max(edim)
         cdim.append(ea)
 
     wb = transform(aall[0])
@@ -178,11 +180,13 @@ def main():
     print('b1,b2,b3:%d,%d,%d'%(wb[6], wb[7], wb[8]))
     print("Y:", y_pred)
 
+    plt.figure(figsize=(8,6))
     plt.plot(cdim)
     plt.xlabel("Step")
     plt.ylabel("FuncC")
     plt.grid(True)
     plt.tight_layout()
+    plt.savefig('ann-hw4/picture/5-1.png')
     plt.show()
 
 

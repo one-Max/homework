@@ -80,14 +80,15 @@ def main():
     for i in range(X_train.shape[1]):
         W[(i, i)] = 0
     # plt.imshow(W)
-    # plt.show()
+    # plt.savefig('ann-hw4/picture/2.png')
+    # visualize(X_train, 'ann-hw4/picture/0.png')
 
     # 更新X状态
     timeNum = 10
     plt.draw()
     plt.pause(0.2)
     
-    for noi in range(50):         # 50种加噪声结果
+    for noi in range(8):         # 8种加噪声结果
         C = copy.deepcopy(X_train)
         for i,x in enumerate(X_train):
             C[i] = addnoise(x, 0.2)
@@ -95,9 +96,9 @@ def main():
         # visualize(c)
         for _ in range(timeNum):     # 迭代次数
             C = dhnn(W, C)
-        visualize(C)
+        visualize(C,f'ann-hw4/picture/b{noi}.png')
 
-    plt.show()
+    # plt.show()
 
 
 
