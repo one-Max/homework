@@ -1,3 +1,11 @@
-dashuju-hw2/data/*
 # 路径名前面不加./
+
+# dashuju-hw2
+dashuju-hw2/data/*
+
+# tongji-hw2
 tongji-hw2/reference/*
+
+# ann-hw5
+ann-hw5/cifar/model_storage/*
+ann-hw5/cifar/picture/*
